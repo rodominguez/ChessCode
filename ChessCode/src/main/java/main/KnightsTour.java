@@ -118,8 +118,8 @@ public class KnightsTour {
 			a[i] = -1;
 
 		// initial position
-		int sx = 3;
-		int sy = 2;
+		int sx = random.nextInt(8);
+		int sy = random.nextInt(8);
 
 		// Current points are same as initial points
 		Cell cell = new Cell(sx, sy);

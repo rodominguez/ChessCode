@@ -11,7 +11,7 @@ public class Main {
 		EncryptAlphabetNetwork encryptNetwork = new EncryptAlphabetNetwork("Encrypt Network");
 		DecryptAlphabetNetwork decryptNetwork = new DecryptAlphabetNetwork("Decrypt Network",
 				encryptNetwork.getAlphabet(), encryptNetwork.getInverseAlphabet());
-		KnightsTourEncryption knightsTourEncryption = new KnightsTourEncryption(234);
+		KnightsTourEncryption knightsTourEncryption = new KnightsTourEncryption(23444);
 		
 		encryptNetwork.start();
 		decryptNetwork.start();
