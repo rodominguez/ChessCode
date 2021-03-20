@@ -20,8 +20,8 @@ public class KnightsTourEncryption {
 		return linearization(blocks);
 	}
 	
-	public Piece[] encrypt (Piece[] pieces) {
-		Piece[][] blocks = new Piece[(int)Math.ceil(pieces.length / 64.0)][64];
+	public PieceType[] encrypt (PieceType[] pieces) {
+		PieceType[][] blocks = new PieceType[(int)Math.ceil(pieces.length / 64.0)][64];
 		for (int i = 0; i < pieces.length; i++) {
 			blocks[i / 64][knightsTour.getSolution()[i % 64] - 1] = pieces[i];
 		}
@@ -38,8 +38,8 @@ public class KnightsTourEncryption {
 		return res;
 	}
 	
-	private Piece[] linearization(Piece[][] matrix) {
-		Piece[] res = new Piece[matrix.length * 64];
+	private PieceType[] linearization(PieceType[][] matrix) {
+		PieceType[] res = new PieceType[matrix.length * 64];
 		
 		for (int i = 0; i < matrix.length * 64; i++)
 			res[i] = matrix[i / 64][i % 64];
@@ -55,8 +55,8 @@ public class KnightsTourEncryption {
 		return linearization(result);
 	}
 	
-	public Piece[] decrypt(Piece[] pieces) {
-		Piece[][] result = new Piece[(int)Math.ceil(pieces.length / 64)][64];
+	public PieceType[] decrypt(PieceType[] pieces) {
+		PieceType[][] result = new PieceType[(int)Math.ceil(pieces.length / 64)][64];
 		for (int i = 0; i < pieces.length; i++)
 			result[i / 64][i % 64] = pieces[(i / 64) * 64 + knightsTour.getSolution()[i % 64] - 1];
 			

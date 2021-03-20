@@ -1,14 +1,12 @@
 package main;
 
-public enum Piece {
+public class Piece {
 
-	KING,
-	QUEEN,
-	PAWN,
-	KNIGHT,
-	BISHOP,
-	ROOK,
-	BLANK,
-	CHARIOT;
+	public PieceType type;
+	public int color;
 	
+	public Piece(PieceType type, int color) {
+		this.type = type;
+		this.color = color;
+	}
 }
