@@ -105,6 +105,27 @@ public class ChessBoardDisplay extends JPanel {
 		}
 	}
 	
+	public void drawTourNumbers(Graphics g, ChessBoard board, int solution[], boolean animated) {
+		int rows = board.ROWS;
+		int cols = board.COLS;
+		int cellWidth = WIDTH / cols,
+			cellHeight = HEIGHT / rows;
+		g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+		g.setColor(Color.WHITE);
+		
+		for (int i = 0; i < board.ROWS; i ++) {
+			for (int j = 0; j < board.COLS; j ++) {
+				int index = i*cols + j;
+				g.drawString(Integer.toString(solution[index]+1), j*cellWidth+cellWidth/2-8, i*cellHeight+cellHeight/2+8);
+				if (animated) {					
+					try {					
+						Thread.sleep(100);
+					} catch (InterruptedException e) {}
+				}
+			}
+		}
+	}
+	
 	public void showNeuralSubstitution(String inMessage, String outMessage) {
 		EventQueue.invokeLater(() -> {
 			Graphics g = getGraphics();
@@ -119,10 +140,12 @@ public class ChessBoardDisplay extends JPanel {
 		});
 	}
 	
-	public void showKnightsTour(ChessBoard emptyBoard, int solution[]) {
+	public void showKnightsTour(ChessBoard emptyBoard, int solution[], boolean animated) {
 		EventQueue.invokeLater(() -> {
 			Graphics g = getGraphics();
 			drawTilePattern(g, board);
+			
+			drawTourNumbers(g, board, solution, animated);
 		});
 	}
 	
@@ -155,6 +178,10 @@ public class ChessBoardDisplay extends JPanel {
 		board.set(0, 0, PieceType.CHARIOT, 1);
 		ChessBoardDisplay display = new ChessBoardDisplay(640, 640, board);
 		
+		int sol[] = new int[64];
+		for (int i = 0; i < 64; i++)
+			sol[i] = i;
+		
 		new Thread(new Runnable() {
 			
 			@Override
@@ -163,9 +190,9 @@ public class ChessBoardDisplay extends JPanel {
 					Thread.sleep(1000);
 //					display.showNeuralSubstitution("Hola Mundo!", "xsada3r3arfwawdsaawseaeda");
 //					display.showFEMMessage("p3pp4\\a");
-					display.showMessageChessboard(board);
+//					display.showMessageChessboard(board);
+					display.showKnightsTour(board, sol, true);
 					Thread.sleep(1000);
-//					display.showKnightsTour(board, new int[] {12});
 				} catch (InterruptedException e) {
 				}
 			}
