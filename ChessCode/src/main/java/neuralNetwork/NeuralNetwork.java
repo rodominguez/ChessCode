@@ -156,4 +156,12 @@ public class NeuralNetwork {
 			System.out.println("");
 		}
 	}
+	
+	public void setWeights(float[][] weights) {
+		this.weights = weights;
+	}
+	
+	public float[][] getWeights(){
+		return weights;
+	}
 }
