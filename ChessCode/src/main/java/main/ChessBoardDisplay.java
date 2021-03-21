@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -113,14 +115,26 @@ public class ChessBoardDisplay extends JPanel {
 		g.setFont(new Font("TimesRoman", Font.BOLD, 30));
 		g.setColor(Color.WHITE);
 		
-		for (int i = 0; i < board.ROWS; i ++) {
-			for (int j = 0; j < board.COLS; j ++) {
-				int index = i*cols + j;
-				g.drawString(Integer.toString(solution[index]+1), j*cellWidth+cellWidth/2-8, i*cellHeight+cellHeight/2+8);
-				if (animated) {					
-					try {					
-						Thread.sleep(100);
-					} catch (InterruptedException e) {}
+		if (animated) {				
+			for (int lookup = 1; lookup <= solution.length; lookup++) {
+				// Buscar la siguiente casilla a donde hay que saltar
+				for (int i = 0; i < solution.length; i++) {
+					if (solution[i] == lookup) {					
+						int r = i / cols;
+						int c = i % cols;
+						g.drawString(Integer.toString(solution[i]), c*cellWidth+cellWidth/2-8, r*cellHeight+cellHeight/2+8);
+						break;
+					}
+				}
+				try {					
+					Thread.sleep(100);
+				} catch (InterruptedException e) {}
+			}
+		} else {			
+			for (int i = 0; i < board.ROWS; i ++) {
+				for (int j = 0; j < board.COLS; j ++) {
+					int index = i*cols + j;
+					g.drawString(Integer.toString(solution[index]), j*cellWidth+cellWidth/2-8, i*cellHeight+cellHeight/2+8);
 				}
 			}
 		}
@@ -178,16 +192,21 @@ public class ChessBoardDisplay extends JPanel {
 		board.set(0, 0, PieceType.CHARIOT, 1);
 		ChessBoardDisplay display = new ChessBoardDisplay(640, 640, board);
 		
+		ArrayList<Integer> solList = new ArrayList<Integer>();
+		for (int i = 0; i < 64; i++)
+			solList.add(i+1);
+		Collections.shuffle(solList);
 		int sol[] = new int[64];
 		for (int i = 0; i < 64; i++)
-			sol[i] = i;
+			sol[i] = solList.get(i);
+		
 		
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 //					display.showNeuralSubstitution("Hola Mundo!", "xsada3r3arfwawdsaawseaeda");
 //					display.showFEMMessage("p3pp4\\a");
 //					display.showMessageChessboard(board);
