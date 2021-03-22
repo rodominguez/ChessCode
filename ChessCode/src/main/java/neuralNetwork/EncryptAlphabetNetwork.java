@@ -45,7 +45,7 @@ public class EncryptAlphabetNetwork implements Runnable{
 	
 	public void weightsToFile () {
 		try {
-		      File myObj = new File("key.txt");
+		      File myObj = new File("EncryptKey.txt");
 		      if (myObj.createNewFile()) {
 		        System.out.println("File created: " + myObj.getName());
 		      } else {
@@ -57,7 +57,7 @@ public class EncryptAlphabetNetwork implements Runnable{
 		    }
 		
 		try {
-		      FileWriter myWriter = new FileWriter("key.txt");
+		      FileWriter myWriter = new FileWriter("EncryptKey.txt");
 		      myWriter.write(convertWeightsToString());
 		      myWriter.close();
 		    } catch (IOException e) {

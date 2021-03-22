@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -18,19 +19,17 @@ public class ChessBoardDisplay extends JPanel {
 	
 	private JFrame jFrame;
 	private final int WIDTH, HEIGHT;
-	private ChessBoard board;
+	private List<ChessBoard> board;
 	private BufferedImage images[];
 	private BufferedImage netImage;
 	
 	private final Color DARK = new Color(90, 40, 1);
 	private final Color LIGHT = new Color(201, 134, 62);
 	
-	public ChessBoardDisplay(int width, int height, ChessBoard board) {
+	public ChessBoardDisplay(int width, int height) {
 		super();
 		WIDTH = width;
 		HEIGHT = height;
-		
-		this.board = board;
 		
 		createWindow();
 		loadImages();
@@ -40,7 +39,7 @@ public class ChessBoardDisplay extends JPanel {
 		jFrame = new JFrame();
 		jFrame.setTitle("Play Cipher");
 		jFrame.setSize(WIDTH, HEIGHT);
-		jFrame.setResizable(false);
+		jFrame.setResizable(true);
 		setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		setMaximumSize(new Dimension(WIDTH, HEIGHT));
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -157,9 +156,9 @@ public class ChessBoardDisplay extends JPanel {
 	public void showKnightsTour(ChessBoard emptyBoard, int solution[], boolean animated) {
 		EventQueue.invokeLater(() -> {
 			Graphics g = getGraphics();
-			drawTilePattern(g, board);
+			drawTilePattern(g, emptyBoard);
 			
-			drawTourNumbers(g, board, solution, animated);
+			drawTourNumbers(g, emptyBoard, solution, animated);
 		});
 	}
 	
@@ -187,10 +186,7 @@ public class ChessBoardDisplay extends JPanel {
 	
 	public static void main(String args[]) {
 		
-		ChessBoard board = new ChessBoard(8, 8);
-		board.set(2, 3, PieceType.KING, 1);
-		board.set(0, 0, PieceType.CHARIOT, 1);
-		ChessBoardDisplay display = new ChessBoardDisplay(640, 640, board);
+		ChessBoardDisplay display = new ChessBoardDisplay(640, 640);
 		
 		ArrayList<Integer> solList = new ArrayList<Integer>();
 		for (int i = 0; i < 64; i++)
@@ -201,7 +197,7 @@ public class ChessBoardDisplay extends JPanel {
 			sol[i] = solList.get(i);
 		
 		
-		new Thread(new Runnable() {
+		/*new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -215,7 +211,7 @@ public class ChessBoardDisplay extends JPanel {
 				} catch (InterruptedException e) {
 				}
 			}
-		}).start();
+		}).start();*/
 	}
 
 }
