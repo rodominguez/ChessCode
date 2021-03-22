@@ -30,6 +30,8 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 	private ChessBoard board;
 	private int[] solution;
 	private int state;
+	
+	private int lookup = 1;
 
 	public ChessBoardDisplay(int width, int height) {
 		super();
@@ -57,7 +59,7 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Thread.sleep(10);
+				Thread.sleep(100);
 				repaint();
 			}
 		} catch (Exception e) {
@@ -69,7 +71,7 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 		g.fillRect(0, 0, 10000, 10000);
 		switch (state) {
 		case 1:
-			showKnightsTour(g, board, solution, false);
+			showKnightsTour(g, board, solution, true);
 			break;
 		case 2:
 			showMessageChessboard(g, board);
@@ -161,20 +163,24 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 		g.setColor(Color.WHITE);
 
 		if (animated) {
-			for (int lookup = 1; lookup <= solution.length; lookup++) {
-				// Buscar la siguiente casilla a donde hay que saltar
-				for (int i = 0; i < solution.length; i++) {
-					if (solution[i] == lookup) {
-						int r = i / cols;
-						int c = i % cols;
-						g.drawString(Integer.toString(solution[i]), c * cellWidth + cellWidth / 2 - 8,
-								r * cellHeight + cellHeight / 2 + 8);
-						break;
-					}
+			// Buscar la siguiente casilla a donde hay que saltar
+			for (int i = 0; i < solution.length; i++) {
+				if (solution[i] < lookup) {
+					int r = i / cols;
+					int c = i % cols;
+					g.drawString(Integer.toString(solution[i]), c * cellWidth + cellWidth / 2 - 8,
+							r * cellHeight + cellHeight / 2 + 8);
 				}
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
+			}
+			for (int i = 0; i < solution.length && lookup < solution.length+1; i++) {
+				if (solution[i] == lookup) {
+					int r = i / cols;
+					int c = i % cols;
+					g.drawString(Integer.toString(solution[i]), c * cellWidth + cellWidth / 2 - 8,
+							r * cellHeight + cellHeight / 2 + 8);
+					
+					lookup++;
+					break;
 				}
 			}
 		} else {
@@ -203,6 +209,7 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 	}
 
 	public void showKnightsTour() {
+		lookup = 1;
 		state = 1;
 	}
 
