@@ -34,7 +34,7 @@ public class Controller {
 		encryptNetwork = new EncryptAlphabetNetwork("Encrypt Network");
 		decryptNetwork = new DecryptAlphabetNetwork("Decrypt Network",
 				encryptNetwork.getAlphabet(), encryptNetwork.getInverseAlphabet());
-		knightsTourEncryption = new KnightsTourEncryption(23444);
+		knightsTourEncryption = new KnightsTourEncryption();
 	}
 	
 	public String encrypt (String code) {
@@ -44,17 +44,62 @@ public class Controller {
 		String encrypt = encryptNetwork.encrypt(code);
 		chessBoardDisplay.showNeuralSubstitution(code, encrypt);
 		
+		System.out.println("NN Encrypt: " + encrypt);
+		
 		char[] encryptedKnights = knightsTourEncryption.encrypt(encrypt.toCharArray());
+		
+		System.out.println("Knight Encrypt: " + String.valueOf(encryptedKnights));
 		
 		Piece[] pieces = Piece.pieceArrayFromBytes(String.valueOf(encryptedKnights).getBytes());
 		
+		System.out.println("Bytes: " + String.valueOf(encryptedKnights).getBytes());
+		
+		System.out.println("Pieces: " + Piece.arrayToString(pieces));
+		
 		pieces = knightsTourEncryption.encrypt(pieces);
+		
+		System.out.println("Pieces Shuffle: " + Piece.arrayToString(pieces));
 		
 		boards = ChessBoard.boardsFromPieces(8, 8, pieces);
 		
 		chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
 		
+		System.out.println("FEN: " + FENConverter.pieceArrayToFEN(pieces));
+		
 		return FENConverter.pieceArrayToFEN(pieces);
+	}
+	
+	public String decrypt (String encription) {
+		boards = new LinkedList<>();
+		indexBoard = 0;
+		
+		System.out.println("FEN: " + encription);
+		
+		Piece[] pieces = FENConverter.FENToPieceArray(encription);
+		
+		System.out.println("Pieces: " + Piece.arrayToString(pieces));
+		
+		boards = ChessBoard.boardsFromPieces(8, 8, pieces);
+		
+		chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
+		
+		pieces = knightsTourEncryption.decrypt(pieces);
+		
+		System.out.println("Pieces Unshuffle: " + Piece.arrayToString(pieces));
+		
+		byte[] bytes = Piece.pieceArrayToBytes(pieces);
+		
+		System.out.println("Bytes: " + bytes);
+		
+		char[] decryptedKnights = new String(bytes).toCharArray();
+		
+		System.out.println("Knight Encrypt: " + String.valueOf(decryptedKnights));
+		
+		decryptedKnights = knightsTourEncryption.decrypt(decryptedKnights);
+		
+		String decription = decryptNetwork.decrypt(String.valueOf(decryptedKnights));
+		
+		return decription;
 	}
 	
 	public void createAlphabet () throws InterruptedException {

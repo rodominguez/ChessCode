@@ -43,15 +43,15 @@ public class Piece {
 	public static byte[] pieceArrayToBytes (Piece[] pieces) {
 		byte[] res = new byte[pieces.length / 2];
 		int x, temp;
-		for (int i = 0; i < pieces.length; i += 2) {
-			x = pieces[i].type.number;
+		for (int i = 0, j = 0; i < pieces.length / 2; i++, j += 2) {
+			x = pieces[j].type.number;
 			x <<= 1;
-			x += pieces[i].color;
+			x += pieces[j].color;
 			x <<=4;
 			
-			temp = pieces[i + 1].type.number;
+			temp = pieces[j + 1].type.number;
 			temp <<= 1;
-			x += temp + pieces[i + 1].color;
+			x += temp + pieces[j + 1].color;
 			
 			res[i] = (byte)x;
 		}
@@ -98,5 +98,14 @@ public class Piece {
 		default:
 			return new Piece(PieceType.BLANK, 0);
 		}
+	}
+	
+	public static String arrayToString (Piece[] pieces) {
+		String res = "";
+		
+		for (Piece p: pieces) {
+			res += p.type.name() + " - " + p.color + ", ";
+		}
+		return res;
 	}
 }

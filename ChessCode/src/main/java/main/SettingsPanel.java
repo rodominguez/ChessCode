@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SettingsPanel extends JFrame {
@@ -18,7 +19,9 @@ public class SettingsPanel extends JFrame {
 	
 	JTextField seed;
 	
-	JTextField output;
+	JTextArea output;
+	
+	JTextArea input;
 
 	public SettingsPanel() {
 		super("Settings");
@@ -81,7 +84,7 @@ public class SettingsPanel extends JFrame {
 		JLabel title = new JLabel("Texto a encriptar");
 		title.setBounds(10, 350 + 130, 200, 30);
 
-		JTextField input = new JTextField();
+		input = new JTextArea();
 		input.setBounds(10, 380 + 130, 400, 90);
 		
 		JButton encrypt = new JButton("Encriptar");
@@ -99,11 +102,18 @@ public class SettingsPanel extends JFrame {
 		JLabel title = new JLabel("Texto encriptado");
 		title.setBounds(410, 350 + 130, 200, 30);
 
-		output = new JTextField();
+		output = new JTextArea();
 		output.setBounds(410, 380 + 130, 400, 90);
+		
+		JButton decrypt = new JButton("Decriptar");
+		decrypt.setBounds(410, 380 + 230, 200, 30);
+		decrypt.addActionListener(event -> {
+			input.setText(controller.decrypt(output.getText()));
+		});
 
 		add(title);
 		add(output);
+		add(decrypt);
 	}
 
 	private void setCreateAlphabet() {
@@ -119,10 +129,6 @@ public class SettingsPanel extends JFrame {
 		});
 
 		add(button);
-	}
-
-	public static void main(String[] args) {
-		new SettingsPanel();
 	}
 
 	public void setController(Controller controller) {

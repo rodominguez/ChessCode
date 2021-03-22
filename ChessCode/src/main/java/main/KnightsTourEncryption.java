@@ -6,6 +6,10 @@ public class KnightsTourEncryption {
 	
 	private char[][] blocks;
 	
+	public KnightsTourEncryption() {
+		
+	}
+	
 	public KnightsTourEncryption(long seed) {
 		knightsTour = new KnightsTour(seed);
 		knightsTour.solve();

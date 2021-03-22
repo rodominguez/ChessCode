@@ -31,12 +31,16 @@ public class FENConverter {
 			} else
 				blankSpace++;
 		}
+		
+		if (blankSpace != 0)
+			res += blankSpace;
 
 		return res;
 	}
 
 	public static Piece[] FENToPieceArray(String fen) {
-		Piece[] res = new Piece[64];
+		String[] strings = fen.split("/");
+		Piece[] res = new Piece[strings.length * 8];
 
 		int i = 0;
 		for (char c : fen.toCharArray()) {
