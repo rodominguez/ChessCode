@@ -121,7 +121,7 @@ public class Controller {
 	
 	public void setSeed (Long seed) {
 		knightsTourEncryption.setSeed(seed);
-		chessBoardDisplayKnightsKey.showKnightsTour(new ChessBoard(8, 8), knightsTourEncryption.getSolution(), false);
+		chessBoardDisplayKnightsKey.showKnightsTour(new ChessBoard(8, 8), knightsTourEncryption.getSolution(), true);
 	}
 	
 	public long getSeed() {

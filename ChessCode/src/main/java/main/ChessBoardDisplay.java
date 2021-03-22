@@ -33,13 +33,14 @@ public class ChessBoardDisplay extends JPanel {
 		
 		createWindow();
 		loadImages();
+		showNeuralSubstitution("", "");
 	}
 	
 	private void createWindow() {
 		jFrame = new JFrame();
 		jFrame.setTitle("Play Cipher");
 		jFrame.setSize(WIDTH, HEIGHT);
-		jFrame.setResizable(true);
+		jFrame.setResizable(false);
 		setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		setMaximumSize(new Dimension(WIDTH, HEIGHT));
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
