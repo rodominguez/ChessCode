@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -25,7 +26,7 @@ public class ChessBoardDisplay extends JPanel {
 	private final Color DARK = new Color(90, 40, 1);
 	private final Color LIGHT = new Color(201, 134, 62);
 	
-	public ChessBoardDisplay(int width, int height, ChessBoard board) {
+	public ChessBoardDisplay(int width, int height) {
 		super();
 		WIDTH = width;
 		HEIGHT = height;
@@ -38,7 +39,7 @@ public class ChessBoardDisplay extends JPanel {
 		jFrame = new JFrame();
 		jFrame.setTitle("Play Cipher");
 		jFrame.setSize(WIDTH, HEIGHT);
-		jFrame.setResizable(false);
+		jFrame.setResizable(true);
 		setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		setMaximumSize(new Dimension(WIDTH, HEIGHT));
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -192,7 +193,7 @@ public class ChessBoardDisplay extends JPanel {
 		ChessBoard board = new ChessBoard(8, 8);
 		board.set(2, 3, PieceType.QUEEN, 0);
 		board.set(0, 0, PieceType.CHARIOT, 1);
-		ChessBoardDisplay display = new ChessBoardDisplay(640, 640, board);
+		ChessBoardDisplay display = new ChessBoardDisplay(640, 640);
 		
 		ArrayList<Integer> solList = new ArrayList<Integer>();
 		for (int i = 0; i < 64; i++)

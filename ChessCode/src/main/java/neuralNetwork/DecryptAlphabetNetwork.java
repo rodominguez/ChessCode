@@ -1,4 +1,7 @@
 package neuralNetwork;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
@@ -41,6 +44,54 @@ public class DecryptAlphabetNetwork implements Runnable{
 	public void run() {
 		neuralNetwork.train();
 		System.out.println(name + " has finished training with a " + neuralNetwork.calculateError() + " error.");
+	}
+	
+	public void loadFile (byte[] file) {
+		String sFile = new String(file);
+		
+		String[] params = sFile.split(",");
+		float[][] weights = new float[ALPHABET_SIZE][ALPHABET_SIZE + 1];
+		
+		for (int i = 0; i < params.length; i++)
+			weights[i / ALPHABET_SIZE][i % (ALPHABET_SIZE + 1)] = Float.parseFloat(params[i]);
+		
+		neuralNetwork.setWeights(weights);
+	}
+	
+	public void weightsToFile () {
+		try {
+		      File myObj = new File("DecryptKey.txt");
+		      if (myObj.createNewFile()) {
+		        System.out.println("File created: " + myObj.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+		
+		try {
+		      FileWriter myWriter = new FileWriter("DecryptKey.txt");
+		      myWriter.write(convertWeightsToString());
+		      myWriter.close();
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+	}
+	
+	private String convertWeightsToString() {
+		float[][] weights = neuralNetwork.getWeights();
+		String res = "";
+		
+		for (int i = 0; i < weights.length * weights[0].length; i++) {
+			res += "" + weights[i / weights.length][i % weights[0].length];
+			if (i < weights.length * weights[0].length - 1)
+				res += ",";
+		}
+		
+		return res;
 	}
 
 	public String decrypt(String s) {

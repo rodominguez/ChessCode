@@ -12,10 +12,12 @@ public class KnightsTour {
 	public static final int cy[] = { 2, -2, 1, -1, 2, -2, 1, -1 };
 
 	private Random random;
+	private long seed;
 	
 	private int[] solution;
 
 	public KnightsTour(long seed) {
+		this.seed = seed;
 		random = new Random(seed);
 	}
 
@@ -156,6 +158,10 @@ public class KnightsTour {
 	
 	public int[] getSolution() {
 		return solution;
+	}
+	
+	public long getSeed() {
+		return seed;
 	}
 
 	// Driver Code
