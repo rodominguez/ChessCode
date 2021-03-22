@@ -1,5 +1,8 @@
 package main;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -118,13 +121,42 @@ public class Controller {
 		
 		setSeed(new Random().nextLong());
 		
+		
+		
 		encryptNetwork.start();
 		decryptNetwork.start();
 	}
 	
+	public void loadWeights(byte[] bytes) {
+		String string = new String(bytes);
+		
+		encryptNetwork.loadFile(string.split("\n")[0].getBytes());
+		decryptNetwork.loadFile(string.split("\n")[1].getBytes());
+	}
+	
 	public void export () {
-		encryptNetwork.weightsToFile();
-		decryptNetwork.weightsToFile();
+		try {
+		      File myObj = new File("Key.txt");
+		      if (myObj.createNewFile()) {
+		        System.out.println("File created: " + myObj.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+		
+		try {
+		      FileWriter myWriter = new FileWriter("Key.txt");
+		      myWriter.write(encryptNetwork.convertWeightsToString());
+		      myWriter.write("\n");
+		      myWriter.write(decryptNetwork.convertWeightsToString());
+		      myWriter.close();
+		    } catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
 	}
 	
 	public void setSeed (Long seed) {

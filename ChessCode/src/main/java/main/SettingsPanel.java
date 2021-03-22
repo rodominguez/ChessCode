@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.swing.JButton;
@@ -42,6 +44,7 @@ public class SettingsPanel extends JFrame{
 		setFilePicker();
 		setSeedInput();
 		setCreateAlphabet();
+		setExportWeights();
 		setInputText();
 		setOutputText();
 	}
@@ -55,8 +58,11 @@ public class SettingsPanel extends JFrame{
 				File f = file.getSelectedFile();
 				String mimetype = new MimetypesFileTypeMap().getContentType(f);
 				String type = mimetype.split("/")[0];
-				if (type.equals("image")) {
-					// TODO
+				try {
+					byte[] bytes = Files.readAllBytes(f.toPath());
+					controller.loadWeights(bytes);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -130,6 +136,16 @@ public class SettingsPanel extends JFrame{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		});
+
+		add(button);
+	}
+	
+	private void setExportWeights() {
+		JButton button = new JButton("Exportar Alfabeto");
+		button.setBounds(220, 350 + 110, 200, 30);
+		button.addActionListener(event -> {
+			controller.export();
 		});
 
 		add(button);

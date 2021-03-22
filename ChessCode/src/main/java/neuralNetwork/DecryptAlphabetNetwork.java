@@ -57,7 +57,7 @@ public class DecryptAlphabetNetwork implements Runnable{
 		float[][] weights = new float[ALPHABET_SIZE][ALPHABET_SIZE + 1];
 		
 		for (int i = 0; i < params.length; i++)
-			weights[i / ALPHABET_SIZE][i % (ALPHABET_SIZE + 1)] = Float.parseFloat(params[i]);
+			weights[i / (ALPHABET_SIZE + 1)][i % (ALPHABET_SIZE + 1)] = Float.parseFloat(params[i]);
 		
 		neuralNetwork.setWeights(weights);
 		isTrained = true;
@@ -86,12 +86,12 @@ public class DecryptAlphabetNetwork implements Runnable{
 		    }
 	}
 	
-	private String convertWeightsToString() {
+	public String convertWeightsToString() {
 		float[][] weights = neuralNetwork.getWeights();
 		String res = "";
 		
 		for (int i = 0; i < weights.length * weights[0].length; i++) {
-			res += "" + weights[i / weights.length][i % weights[0].length];
+			res += "" + weights[i / weights[0].length][i % weights[0].length];
 			if (i < weights.length * weights[0].length - 1)
 				res += ",";
 		}
