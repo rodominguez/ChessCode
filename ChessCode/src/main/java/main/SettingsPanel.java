@@ -47,6 +47,7 @@ public class SettingsPanel extends JFrame{
 		setExportWeights();
 		setInputText();
 		setOutputText();
+		setNextBoard();
 	}
 
 	private void setFilePicker() {
@@ -146,6 +147,16 @@ public class SettingsPanel extends JFrame{
 		button.setBounds(220, 350 + 110, 200, 30);
 		button.addActionListener(event -> {
 			controller.export();
+		});
+
+		add(button);
+	}
+	
+	private void setNextBoard() {
+		JButton button = new JButton("Siguiente Tablero");
+		button.setBounds(520, 350 + 110, 200, 30);
+		button.addActionListener(event -> {
+			controller.nextBoard();
 		});
 
 		add(button);

@@ -12,7 +12,7 @@ public class DecryptAlphabetNetwork implements Runnable{
 
 	private static final int ALPHABET_SIZE = 128 - offset;
 
-	private static final int bindSize = 4;
+	private static final int bindSize = 6;
 
 	private HashMap<Character, String> alphabet;
 

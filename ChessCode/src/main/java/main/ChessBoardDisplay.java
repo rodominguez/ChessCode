@@ -57,7 +57,7 @@ public class ChessBoardDisplay extends JPanel implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 				repaint();
 			}
 		} catch (Exception e) {

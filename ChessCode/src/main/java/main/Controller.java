@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +30,7 @@ public class Controller {
 	private int indexBoard;
 	
 	public Controller() {
+		boards = new ArrayList<>();
 		settingsPanel = new SettingsPanel();
 		settingsPanel.setController(this);
 		chessBoardDisplay = new ChessBoardDisplay(640, 640);
@@ -170,10 +172,10 @@ public class Controller {
 	}
 	
 	public void nextBoard() {
-		indexBoard++;
-		if (indexBoard < boards.size()) {
+		if (indexBoard + 1 < boards.size()) {
 			chessBoardDisplay.setBoard(boards.get(indexBoard));
 			chessBoardDisplay.showMessageChessboard();
+			indexBoard++;
 		}
 	}
 	
