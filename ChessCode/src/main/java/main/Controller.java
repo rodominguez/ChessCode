@@ -40,11 +40,13 @@ public class Controller {
 	public String encrypt (String code) {
 		if (!encryptNetwork.getIsTrained())
 			return "Network not trained";
+		if (code.equals(""))
+			return "";
 		boards = new LinkedList<>();
 		indexBoard = 0;
 		
 		String encrypt = encryptNetwork.encrypt(code);
-		chessBoardDisplay.showNeuralSubstitution(code, encrypt);
+		//chessBoardDisplay.showNeuralSubstitution(code, encrypt);
 		
 		System.out.println("NN Encrypt: " + encrypt);
 		
@@ -64,7 +66,9 @@ public class Controller {
 		
 		boards = ChessBoard.boardsFromPieces(8, 8, pieces);
 		
-		chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
+		chessBoardDisplay.setBoard(boards.get(indexBoard));
+		
+		chessBoardDisplay.showMessageChessboard();
 		
 		System.out.println("FEN: " + FENConverter.pieceArrayToFEN(pieces));
 		
@@ -74,6 +78,8 @@ public class Controller {
 	public String decrypt (String encription) {
 		if (!decryptNetwork.getIsTrained())
 			return "Network not trained";
+		if (encription.equals(""))
+			return "";
 		boards = new LinkedList<>();
 		indexBoard = 0;
 		
@@ -85,7 +91,9 @@ public class Controller {
 		
 		boards = ChessBoard.boardsFromPieces(8, 8, pieces);
 		
-		chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
+		chessBoardDisplay.setBoard(boards.get(indexBoard));
+		
+		chessBoardDisplay.showMessageChessboard();
 		
 		pieces = knightsTourEncryption.decrypt(pieces);
 		
@@ -121,7 +129,8 @@ public class Controller {
 	
 	public void setSeed (Long seed) {
 		knightsTourEncryption.setSeed(seed);
-		chessBoardDisplayKnightsKey.showKnightsTour(new ChessBoard(8, 8), knightsTourEncryption.getSolution(), true);
+		chessBoardDisplayKnightsKey.setSolution(knightsTourEncryption.getSolution());
+		chessBoardDisplayKnightsKey.showKnightsTour();
 	}
 	
 	public long getSeed() {
@@ -131,7 +140,8 @@ public class Controller {
 	public void nextBoard() {
 		indexBoard++;
 		if (indexBoard < boards.size()) {
-			chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
+			chessBoardDisplay.setBoard(boards.get(indexBoard));
+			chessBoardDisplay.showMessageChessboard();
 		}
 	}
 	

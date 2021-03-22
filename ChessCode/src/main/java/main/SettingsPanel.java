@@ -11,11 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class SettingsPanel extends JFrame {
+public class SettingsPanel extends JFrame{
 
 	private static final long serialVersionUID = 2369329972406971395L;
 
 	private Controller controller;
+	
+	private Thread thread;
 	
 	JTextField seed;
 	
@@ -33,6 +35,8 @@ public class SettingsPanel extends JFrame {
 		setSize(750, 700);
 		setLayout(null);
 	}
+	
+	
 
 	private void setFields() {
 		setFilePicker();
@@ -66,7 +70,7 @@ public class SettingsPanel extends JFrame {
 
 		seed = new JTextField();
 		seed.addActionListener(event -> {
-			// TODO
+			controller.setSeed(Long.parseLong(seed.getText()));
 		});
 		seed.setBounds(10, 380 + 70, 200, 30);
 
