@@ -38,6 +38,8 @@ public class Controller {
 	}
 	
 	public String encrypt (String code) {
+		if (!encryptNetwork.getIsTrained())
+			return "Network not trained";
 		boards = new LinkedList<>();
 		indexBoard = 0;
 		
@@ -52,7 +54,7 @@ public class Controller {
 		
 		Piece[] pieces = Piece.pieceArrayFromBytes(String.valueOf(encryptedKnights).getBytes());
 		
-		System.out.println("Bytes: " + String.valueOf(encryptedKnights).getBytes());
+		System.out.println("Bytes: " + printByteArray(String.valueOf(encryptedKnights).getBytes()));
 		
 		System.out.println("Pieces: " + Piece.arrayToString(pieces));
 		
@@ -70,6 +72,8 @@ public class Controller {
 	}
 	
 	public String decrypt (String encription) {
+		if (!decryptNetwork.getIsTrained())
+			return "Network not trained";
 		boards = new LinkedList<>();
 		indexBoard = 0;
 		
@@ -89,7 +93,7 @@ public class Controller {
 		
 		byte[] bytes = Piece.pieceArrayToBytes(pieces);
 		
-		System.out.println("Bytes: " + bytes);
+		System.out.println("Bytes: " + printByteArray(bytes));
 		
 		char[] decryptedKnights = new String(bytes).toCharArray();
 		
@@ -108,9 +112,6 @@ public class Controller {
 		
 		encryptNetwork.start();
 		decryptNetwork.start();
-		
-		encryptNetwork.join();
-		decryptNetwork.join();
 	}
 	
 	public void export () {
@@ -132,5 +133,15 @@ public class Controller {
 		if (indexBoard < boards.size()) {
 			chessBoardDisplay.showMessageChessboard(boards.get(indexBoard));
 		}
+	}
+	
+	public String printByteArray (byte[] bytes) {
+		String res = "";
+		
+		for (int i = 0; i < bytes.length; i++) {
+			res += bytes[i] + ", ";
+		}
+		
+		return res;
 	}
 }

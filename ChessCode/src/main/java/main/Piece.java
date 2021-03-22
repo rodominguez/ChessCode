@@ -27,14 +27,19 @@ public class Piece {
 			color >>>= 4;
 			pieceNum = bytes[i] & type2;
 			pieceNum >>>= 5;
-			res[j] = new Piece(PieceType.getFromNumber(pieceNum), color);
+			if (color == 0 && pieceNum == 0)
+				res[j] = new Piece(PieceType.BLANK, 0);
+			else
+				res[j] = new Piece(PieceType.getFromNumber(pieceNum), color);
 
 			// Second Half
-			
 			color = bytes[i] & color1;
 			pieceNum = bytes[i] & type1;
 			pieceNum >>>= 1;
-			res[j + 1] = new Piece(PieceType.getFromNumber(pieceNum), color);
+			if (color == 0 && pieceNum == 0)
+				res[j + 1] = new Piece(PieceType.BLANK, 0);
+			else
+				res[j + 1] = new Piece(PieceType.getFromNumber(pieceNum), color);
 		}
 		
 		return res;
@@ -95,6 +100,10 @@ public class Piece {
 			return new Piece(PieceType.CHARIOT, 1);
 		case 'c':
 			return new Piece(PieceType.CHARIOT, 0);
+		case 'G':
+			return new Piece(PieceType.GENERAL, 1);
+		case 'g':
+			return new Piece(PieceType.GENERAL, 0);
 		default:
 			return new Piece(PieceType.BLANK, 0);
 		}

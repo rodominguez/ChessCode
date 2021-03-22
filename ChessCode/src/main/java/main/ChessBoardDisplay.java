@@ -9,11 +9,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class ChessBoardDisplay extends JPanel {
 	
@@ -56,8 +56,8 @@ public class ChessBoardDisplay extends JPanel {
 		bImages = new BufferedImage[8];
 		wImages = new BufferedImage[8];
 		try {
-			String bNames[] = {"kingb.png", "queenb.png", "pawnb.png", "knightb.png", "bishopb.png", "rookb.png", "chariotb.png"};
-			String wNames[] = {"kingw.png", "queenw.png", "pawnw.png", "knightw.png", "bishopw.png", "rookw.png", "chariotw.png"};
+			String bNames[] = {"kingb.png", "queenb.png", "pawnb.png", "knightb.png", "bishopb.png", "rookb.png", "chariotb.png", "generalb.png"};
+			String wNames[] = {"kingw.png", "queenw.png", "pawnw.png", "knightw.png", "bishopw.png", "rookw.png", "chariotw.png", "generalw.png"};
 			for (int i = 0; i < bNames.length; i++) {
 				bImages[i] = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./"+bNames[i]));
 				wImages[i] = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./"+wNames[i]));
@@ -144,7 +144,7 @@ public class ChessBoardDisplay extends JPanel {
 	}
 	
 	public void showNeuralSubstitution(String inMessage, String outMessage) {
-		EventQueue.invokeLater(() -> {
+		SwingUtilities.invokeLater(() -> {
 			Graphics g = getGraphics();
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 36)); 
 			clear(g);
@@ -158,7 +158,7 @@ public class ChessBoardDisplay extends JPanel {
 	}
 	
 	public void showKnightsTour(ChessBoard emptyBoard, int solution[], boolean animated) {
-		EventQueue.invokeLater(() -> {
+		SwingUtilities.invokeLater(() -> {
 			Graphics g = getGraphics();
 			drawTilePattern(g, emptyBoard);
 			
@@ -167,7 +167,7 @@ public class ChessBoardDisplay extends JPanel {
 	}
 	
 	public void showMessageChessboard(ChessBoard board) {
-		EventQueue.invokeLater(() -> {
+		SwingUtilities.invokeLater(() -> {
 			Graphics g = getGraphics();
 			drawTilePattern(g, board);
 			drawBoardPieces(g, board);
@@ -175,7 +175,7 @@ public class ChessBoardDisplay extends JPanel {
 	}
 	
 	public void showFEMMessage(String fem) {
-		EventQueue.invokeLater(() -> {
+		SwingUtilities.invokeLater(() -> {
 			Graphics g = getGraphics();
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
 			clear(g);

@@ -1,14 +1,15 @@
 package main;
 
 public enum PieceType {
-	
-	KING("K", "k", 7),
-	QUEEN("Q", "q", 1),
-	PAWN("P", "p", 2),
-	KNIGHT("N", "n", 3),
-	BISHOP("B", "b", 4),
-	ROOK("R", "r", 5),
-	CHARIOT("C", "c", 6),
+
+	KING("K", "k", 1),
+	QUEEN("Q", "q", 2),
+	PAWN("P", "p", 3),
+	KNIGHT("N", "n", 4),
+	BISHOP("B", "b", 5),
+	ROOK("R", "r", 6),
+	CHARIOT("C", "c", 7),
+	GENERAL("G", "g", 0),
 	BLANK("1", "1", 0);
 	
 	public String whiteName, blackName;
@@ -23,23 +24,23 @@ public enum PieceType {
 	
 	public static PieceType getFromNumber (int num) {
 		switch (num) {
-		case 7:
-			return KING;
-		case 1:
-			return QUEEN;
-		case 2:
-			return PAWN;
-		case 3:
-			return KNIGHT;
-		case 4:
-			return BISHOP;
-		case 5:
-			return ROOK;
-		case 6:
-			return CHARIOT;
 		case 0:
-			return BLANK;
+			return GENERAL;
+		case 1:
+			return KING;
+		case 2:
+			return QUEEN;
+		case 3:
+			return PAWN;
+		case 4:
+			return KNIGHT;
+		case 5:
+			return BISHOP;
+		case 6:
+			return ROOK;
+		case 7:
+			return CHARIOT;
 		}
-		return BLANK;
+		return null;
 	}
 }

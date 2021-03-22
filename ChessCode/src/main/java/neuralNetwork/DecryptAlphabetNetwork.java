@@ -23,6 +23,8 @@ public class DecryptAlphabetNetwork implements Runnable{
 	private Thread thread;
 	
 	private String name;
+	
+	private boolean isTrained;
 
 	public DecryptAlphabetNetwork(String name, HashMap<Character, String> alphabet, HashMap<String, Character> inverseAlphabet) {
 		this.name = name;
@@ -34,6 +36,7 @@ public class DecryptAlphabetNetwork implements Runnable{
 	public void start () {
 		thread = new Thread(this);
 		thread.start();
+		isTrained = false;
 	}
 	
 	public void join() throws InterruptedException {
@@ -44,6 +47,7 @@ public class DecryptAlphabetNetwork implements Runnable{
 	public void run() {
 		neuralNetwork.train();
 		System.out.println(name + " has finished training with a " + neuralNetwork.calculateError() + " error.");
+		isTrained = true;
 	}
 	
 	public void loadFile (byte[] file) {
@@ -56,6 +60,7 @@ public class DecryptAlphabetNetwork implements Runnable{
 			weights[i / ALPHABET_SIZE][i % (ALPHABET_SIZE + 1)] = Float.parseFloat(params[i]);
 		
 		neuralNetwork.setWeights(weights);
+		isTrained = true;
 	}
 	
 	public void weightsToFile () {
@@ -217,6 +222,10 @@ public class DecryptAlphabetNetwork implements Runnable{
 			System.out.print(vector[i] + ",");
 		}
 		System.out.println("");
+	}
+	
+	public boolean getIsTrained() {
+		return isTrained;
 	}
 }
 
