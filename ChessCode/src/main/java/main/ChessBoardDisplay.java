@@ -18,8 +18,8 @@ public class ChessBoardDisplay extends JPanel {
 	
 	private JFrame jFrame;
 	private final int WIDTH, HEIGHT;
-	private ChessBoard board;
-	private BufferedImage images[];
+	private BufferedImage bImages[];
+	private BufferedImage wImages[];
 	private BufferedImage netImage;
 	
 	private final Color DARK = new Color(90, 40, 1);
@@ -29,8 +29,6 @@ public class ChessBoardDisplay extends JPanel {
 		super();
 		WIDTH = width;
 		HEIGHT = height;
-		
-		this.board = board;
 		
 		createWindow();
 		loadImages();
@@ -54,11 +52,15 @@ public class ChessBoardDisplay extends JPanel {
 	}
 	
 	private void loadImages() {
-		images = new BufferedImage[8];
+		bImages = new BufferedImage[8];
+		wImages = new BufferedImage[8];
 		try {
-			String names[] = {"king.png", "queen.png", "pawn.png", "knight.png", "bishop.jpg", "rook.png", "chariot.jpg"};
-			for (int i = 0; i < names.length; i++)
-				images[i] = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./"+names[i]));
+			String bNames[] = {"kingb.png", "queenb.png", "pawnb.png", "knightb.png", "bishopb.png", "rookb.png", "chariotb.png"};
+			String wNames[] = {"kingw.png", "queenw.png", "pawnw.png", "knightw.png", "bishopw.png", "rookw.png", "chariotw.png"};
+			for (int i = 0; i < bNames.length; i++) {
+				bImages[i] = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./"+bNames[i]));
+				wImages[i] = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./"+wNames[i]));
+			}
 			netImage = (BufferedImage) ImageIO.read(getClass().getClassLoader().getResource("./network.png"));
 		} catch (IOException e) {		
 			e.printStackTrace();
@@ -101,7 +103,7 @@ public class ChessBoardDisplay extends JPanel {
 			for (int j = 0; j < board.COLS; j ++) {
 				Piece p = board.get(i, j);
 				if (p.type == PieceType.BLANK) continue;				
-				BufferedImage imgType = images[p.type.ordinal()];
+				BufferedImage imgType = p.color == 0 ? bImages[p.type.ordinal()] : wImages[p.type.ordinal()];
 				g.drawImage(imgType, j*cellWidth, i*cellHeight, cellWidth, cellHeight, null);
 			}
 		}
@@ -157,9 +159,9 @@ public class ChessBoardDisplay extends JPanel {
 	public void showKnightsTour(ChessBoard emptyBoard, int solution[], boolean animated) {
 		EventQueue.invokeLater(() -> {
 			Graphics g = getGraphics();
-			drawTilePattern(g, board);
+			drawTilePattern(g, emptyBoard);
 			
-			drawTourNumbers(g, board, solution, animated);
+			drawTourNumbers(g, emptyBoard, solution, animated);
 		});
 	}
 	
@@ -188,7 +190,7 @@ public class ChessBoardDisplay extends JPanel {
 	public static void main(String args[]) {
 		
 		ChessBoard board = new ChessBoard(8, 8);
-		board.set(2, 3, PieceType.KING, 1);
+		board.set(2, 3, PieceType.QUEEN, 0);
 		board.set(0, 0, PieceType.CHARIOT, 1);
 		ChessBoardDisplay display = new ChessBoardDisplay(640, 640, board);
 		
@@ -209,8 +211,8 @@ public class ChessBoardDisplay extends JPanel {
 					Thread.sleep(2000);
 //					display.showNeuralSubstitution("Hola Mundo!", "xsada3r3arfwawdsaawseaeda");
 //					display.showFEMMessage("p3pp4\\a");
-//					display.showMessageChessboard(board);
-					display.showKnightsTour(board, sol, true);
+					display.showMessageChessboard(board);
+//					display.showKnightsTour(board, sol, true);
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 				}
