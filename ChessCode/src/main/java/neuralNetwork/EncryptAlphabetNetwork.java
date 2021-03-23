@@ -24,6 +24,7 @@ public class EncryptAlphabetNetwork implements Runnable{
 	
 	private String name;
 	
+	
 	private boolean isTrained;
 
 	public EncryptAlphabetNetwork(String name) {
