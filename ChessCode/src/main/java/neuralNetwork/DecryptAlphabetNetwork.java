@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class DecryptAlphabetNetwork implements Runnable{
 
-	private static final int offset = 96;
+	private static final int offset = 65;
 
 	private static final int ALPHABET_SIZE = 128 - offset;
 
