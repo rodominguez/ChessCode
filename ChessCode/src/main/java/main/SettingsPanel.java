@@ -77,7 +77,7 @@ public class SettingsPanel extends JFrame{
 
 		seed = new JTextField();
 		seed.addActionListener(event -> {
-			controller.setSeed(Long.parseLong(seed.getText()));
+			controller.setSeed(seed.getText());
 		});
 		seed.setBounds(10, 380 + 70, 200, 30);
 

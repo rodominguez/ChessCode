@@ -161,6 +161,17 @@ public class Controller {
 		    }
 	}
 	
+	public void setSeed (String string) {
+		Long seed = 0l;
+		
+		for (char c: string.toCharArray())
+			seed += c;
+		
+		knightsTourEncryption.setSeed(seed);
+		chessBoardDisplayKnightsKey.setSolution(knightsTourEncryption.getSolution());
+		chessBoardDisplayKnightsKey.showKnightsTour();
+	}
+	
 	public void setSeed (Long seed) {
 		knightsTourEncryption.setSeed(seed);
 		chessBoardDisplayKnightsKey.setSolution(knightsTourEncryption.getSolution());
