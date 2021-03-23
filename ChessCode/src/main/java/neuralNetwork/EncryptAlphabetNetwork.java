@@ -8,11 +8,11 @@ import java.util.Random;
 
 public class EncryptAlphabetNetwork implements Runnable{
 
-	private static final int offset = 65;
+	private static final int offset = 96;
 
 	private static final int ALPHABET_SIZE = 128 - offset;
 
-	private static final int bindSize = 6;
+	private static final int bindSize = 4;
 
 	private HashMap<Character, String> alphabet;
 
